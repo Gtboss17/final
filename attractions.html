@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Explore London - Attractions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+            <img src="images/explore-london-logo.png" alt="Explore London Logo" height="50">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav align-items-center gap-2">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="attractions.html">Attractions</a></li>
+                <li class="nav-item"><a class="nav-link" href="map.html">Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="itinerary.html">Itinerary</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+            <ul class="navbar-nav align-items-center gap-2 ms-auto" id="auth-links"></ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container mt-5">
+    <h2>Top London Attractions</h2>
+    <p>Browse our full list of London attractions and add your favourites to your itinerary.</p>
+
+    <div id="attractions-container" class="row mt-4">
+        <!-- JS will inject attraction cards here -->
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer mt-5 bg-dark text-white py-4">
+    <div class="container">
+        <div class="row text-center text-md-start">
+            <div class="col-md-4 mb-3">
+                <h5>Contact Us</h5>
+                <p>Email: explore@londonvisits.com</p>
+                <p>Phone: +44 20 7946 0991</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="privacy.html" class="text-white text-decoration-none">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="text-white text-decoration-none">Terms of Service</a></li>
+                    <li><a href="sitemap.html" class="text-white text-decoration-none">Sitemap</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Follow Us</h5>
+                <div class="d-flex gap-3 justify-content-center justify-content-md-start">
+                    <a href="#" class="text-white"><i class="bi bi-facebook fs-4"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-twitter fs-4"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <small>&copy; 2025 Explore London. All rights reserved.</small>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/data.js"></script>
+<script>
+    let itinerary = JSON.parse(localStorage.getItem('itinerary')) || [];
+
+    function addToItinerary(place) {
+        if (!itinerary.includes(place)) {
+            itinerary.push(place);
+            localStorage.setItem('itinerary', JSON.stringify(itinerary));
+            alert(`${place} added to your itinerary.`);
+        } else {
+            alert(`${place} is already in your itinerary.`);
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem("currentUser");
+        location.reload();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const authLinks = document.getElementById("auth-links");
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+        if (authLinks) {
+            if (currentUser && currentUser.username) {
+                authLinks.innerHTML = `
+          <li class="nav-item text-nowrap"><span class="nav-link disabled">Welcome, ${currentUser.username}</span></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="logout()">Sign Out</a></li>
+        `;
+            } else {
+                authLinks.innerHTML = `
+          <li class="nav-item"><a class="nav-link" href="login.html">Sign In</a></li>
+          <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+        `;
+            }
+        }
+
+        const container = document.getElementById("attractions-container");
+
+        if (!Array.isArray(attractions)) {
+            console.error("⚠️ attractions array is missing or not defined in data.js");
+            return;
+        }
+
+        attractions.forEach(attr => {
+            const col = document.createElement("div");
+            col.className = "col-md-4 mb-4";
+            col.innerHTML = `
+        <div class="card h-100">
+          <img src="${attr.image}" class="card-img-top" alt="${attr.name}">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">${attr.name}</h5>
+            <p class="card-text">${attr.description}</p>
+            <p class="text-muted small">${attr.popularityDescription}</p>
+            <a href="${attr.link}" target="_blank" class="btn btn-sm btn-outline-secondary mb-2">Learn More</a>
+            <button class="btn btn-itinerary mt-auto" onclick="addToItinerary('${attr.name}')">Add to Itinerary</button>
+          </div>
+        </div>
+      `;
+            container.appendChild(col);
+        });
+    });
+</script>
+
+</body>
+</html>

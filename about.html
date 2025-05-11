@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Explore London - About Us</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        .hero-about {
+            background: url('images/london-skyline.jpg') no-repeat center center/cover;
+            height: 400px;
+            position: relative;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-about::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .hero-about h1 {
+            z-index: 1;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .about-section {
+            padding: 60px 15px;
+        }
+        .testimonial-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .team-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .team-card img {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+            <img src="images/explore-london-logo.png" alt="Explore London Logo" height="60">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav align-items-center gap-2">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="attractions.html">Attractions</a></li>
+                <li class="nav-item"><a class="nav-link" href="map.html">Map</a></li>
+                <li class="nav-item"><a class="nav-link" href="itinerary.html">Itinerary</a></li>
+                <li class="nav-item"><a class="nav-link active" href="about.html">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+            <ul class="navbar-nav align-items-center gap-2 ms-auto" id="auth-links"></ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero-about">
+    <h1>About Explore London</h1>
+</section>
+
+<!-- About Content -->
+<div class="container about-section">
+    <div data-aos="fade-up">
+        <h2 class="mb-3">Our Vision</h2>
+        <p class="lead">Explore London helps travelers and locals discover the magic of London — from its iconic landmarks to hidden gems.</p>
+    </div>
+
+    <hr class="my-5">
+
+    <div class="row">
+        <div class="col-md-6" data-aos="fade-right">
+            <h4>Mission</h4>
+            <p>We aim to make trip planning fun, visual, and effortless. Whether you’re exploring with friends, family, or solo — our tools empower your experience.</p>
+        </div>
+        <div class="col-md-6" data-aos="fade-left">
+            <h4>Key Features</h4>
+            <ul>
+                <li>Category-based attraction browsing</li>
+                <li>Filter by price, distance, or popularity</li>
+                <li>Customizable trip itinerary builder</li>
+                <li>Live interactive map with markers and details</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-6" data-aos="fade-up">
+            <h4>Tech Stack</h4>
+            <ul>
+                <li>HTML5, CSS3, JavaScript</li>
+                <li>Bootstrap 5 for layout and responsiveness</li>
+                <li>Leaflet.js for real-time maps</li>
+                <li>LocalStorage to save user data</li>
+            </ul>
+        </div>
+        <div class="col-md-6" data-aos="fade-up">
+            <h4>Meet the Developer</h4>
+            <p>This site was designed and developed entirely by one developer with a passion for tech, travel, and polished digital experiences. Every feature — from maps to user logic — was built with performance and clarity in mind.</p>
+        </div>
+    </div>
+
+    <!-- Team Card -->
+    <div class="row justify-content-center mt-5" data-aos="zoom-in">
+        <div class="col-md-4">
+            <div class="team-card">
+                <img src="images/glenn.png" alt="Developer">
+                <h5 class="mt-2">Glenn (Sole Developer)</h5>
+                <p>Creator of Explore London — full-stack developer with a drive to solve real-world problems through code.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="mt-5" data-aos="fade-up">
+        <h3 class="text-center mb-4">What Visitors Say</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="testimonial-card">
+                    <p>"Explore London made our city break so much easier to plan. The itinerary feature was a lifesaver!"</p>
+                    <strong>— Emily R., Tourist</strong>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="testimonial-card">
+                    <p>"I’ve lived in London for years, but this helped me discover hidden gems I never knew existed."</p>
+                    <strong>— Daniel S., Local</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer mt-5 bg-dark text-white py-4">
+    <div class="container">
+        <div class="row text-center text-md-start">
+            <div class="col-md-4 mb-3">
+                <h5>Contact Us</h5>
+                <p>Email: explore@londonvisits.com</p>
+                <p>Phone: +44 20 7946 0991</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="privacy.html" class="text-white text-decoration-none">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="text-white text-decoration-none">Terms of Service</a></li>
+                    <li><a href="sitemap.html" class="text-white text-decoration-none">Sitemap</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Follow Us</h5>
+                <div class="d-flex gap-3 justify-content-center justify-content-md-start">
+                    <a href="#" class="text-white"><i class="bi bi-facebook fs-4"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-twitter fs-4"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <small>&copy; 2025 Explore London. All rights reserved.</small>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+    AOS.init({ once: true });
+
+    const authLinks = document.getElementById("auth-links");
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    if (authLinks) {
+        if (currentUser?.username) {
+            authLinks.innerHTML = `
+        <li class="nav-item"><span class="nav-link disabled">Welcome, ${currentUser.username}</span></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="logout()">Sign Out</a></li>
+      `;
+        } else {
+            authLinks.innerHTML = `
+        <li class="nav-item"><a class="nav-link" href="login.html">Sign In</a></li>
+        <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+      `;
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem("currentUser");
+        location.reload();
+    }
+</script>
+</body>
+</html>

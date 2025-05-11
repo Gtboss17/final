@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Explore London on the Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #ffffff, #f5f5f5);
+    }
+    #map {
+      height: 500px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    .filter-box {
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 20px;
+    }
+    .filter-box .btn-outline-danger {
+      border-color: #b00020;
+      color: #b00020;
+      font-weight: 500;
+      border-radius: 20px;
+      padding: 6px 16px;
+    }
+    .filter-box .btn-outline-danger:hover {
+      background-color: #b00020;
+      color: #fff;
+    }
+    .filter-box .btn-outline-secondary {
+      border-color: #888;
+      color: #555;
+      font-weight: 500;
+      border-radius: 20px;
+      padding: 6px 16px;
+    }
+    .filter-box .btn-outline-secondary:hover {
+      background-color: #888;
+      color: #fff;
+    }
+    .popup-content {
+      font-size: 0.9rem;
+    }
+    .popup-content strong {
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">
+      <img src="images/explore-london-logo.png" alt="Explore London Logo" height="60" />
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav align-items-center gap-2">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="attractions.html">Attractions</a></li>
+        <li class="nav-item"><a class="nav-link active" href="map.html">Map</a></li>
+        <li class="nav-item"><a class="nav-link" href="itinerary.html">Itinerary</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+      <ul class="navbar-nav align-items-center gap-2 ms-auto" id="auth-links"></ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Explore London by Category</h2>
+
+  <!-- Clean Filter Box -->
+  <div class="filter-box d-flex flex-wrap justify-content-center gap-2">
+    <button class="btn btn-outline-danger" onclick="filterMarkers('Dining')">Dining</button>
+    <button class="btn btn-outline-danger" onclick="filterMarkers('Entertainment')">Entertainment</button>
+    <button class="btn btn-outline-danger" onclick="filterMarkers('History')">History</button>
+    <button class="btn btn-outline-danger" onclick="filterMarkers('Landmarks')">Landmarks</button>
+    <button class="btn btn-outline-danger" onclick="filterMarkers('Family')">Family</button>
+    <button class="btn btn-outline-secondary" onclick="filterMarkers('All')">Show All</button>
+  </div>
+
+  <div id="map"></div>
+
+  <h4><span class="text-danger">⭐</span> Your Favourite Attractions</h4>
+  <ul id="favourites-list" class="list-group mb-5"></ul>
+</div>
+
+<!-- Footer -->
+<footer class="footer mt-5 bg-dark text-white py-4">
+  <div class="container">
+    <div class="row text-center text-md-start">
+      <div class="col-md-4 mb-3">
+        <h5>Contact Us</h5>
+        <p>Email: explore@londonvisits.com</p>
+        <p>Phone: +44 20 7946 0991</p>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="privacy.html" class="text-white text-decoration-none">Privacy Policy</a></li>
+          <li><a href="terms.html" class="text-white text-decoration-none">Terms of Service</a></li>
+          <li><a href="sitemap.html" class="text-white text-decoration-none">Sitemap</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Follow Us</h5>
+        <div class="d-flex gap-3 justify-content-center justify-content-md-start">
+          <a href="#" class="text-white"><i class="bi bi-facebook fs-4"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-twitter fs-4"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      <small>&copy; 2025 Explore London. All rights reserved.</small>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/data.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const authLinks = document.getElementById("auth-links");
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (authLinks) {
+      authLinks.innerHTML = currentUser?.username
+              ? `<li class="nav-item"><span class="nav-link disabled">Welcome, ${currentUser.username}</span></li>
+           <li class="nav-item"><a class="nav-link" href="#" onclick="logout()">Sign Out</a></li>`
+              : `<li class="nav-item"><a class="nav-link" href="login.html">Sign In</a></li>
+           <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>`;
+    }
+  });
+
+  function logout() {
+    localStorage.removeItem("currentUser");
+    location.reload();
+  }
+
+  const map = L.map("map").setView([51.505, -0.09], 12);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "Map data © OpenStreetMap contributors"
+  }).addTo(map);
+
+  const iconMap = {
+    "Dining": "images/dining.png",
+    "Entertainment": "images/entertainment.png",
+    "History": "images/history.png",
+    "Landmarks": "images/landmarks.png",
+    "Family": "images/family.png"
+  };
+
+  let allMarkers = [];
+
+  function createMarker(attr) {
+    const iconUrl = iconMap[attr.category];
+    const markerIcon = L.icon({
+      iconUrl,
+      iconSize: [26, 26],
+      iconAnchor: [13, 26],
+      popupAnchor: [0, -28]
+    });
+
+    const marker = L.marker([attr.lat, attr.lng], { icon: markerIcon }).addTo(map);
+    marker.category = attr.category;
+
+    const popup = `
+      <div class="popup-content">
+        <strong>${attr.name}</strong><br>
+        <em>${attr.description}</em><br>
+        <small>${attr.popularityDescription}</small><hr>
+        <strong>Address:</strong> ${attr.address || 'N/A'}<br>
+        <strong>Email:</strong> <a href="mailto:${attr.email}">${attr.email || 'N/A'}</a><br>
+        <strong>Transport:</strong> ${attr.transport || 'N/A'}<br><br>
+        <a href="${attr.link}" target="_blank" class="btn btn-sm btn-outline-secondary mb-2">Learn More</a><br>
+        <button class="btn btn-sm btn-outline-primary" onclick="addFavourite('${attr.name}')">Add to Favourites</button>
+      </div>
+    `;
+    marker.bindPopup(popup);
+    return marker;
+  }
+
+  function filterMarkers(category) {
+    allMarkers.forEach(m => {
+      if (category === "All" || m.category === category) {
+        m.addTo(map);
+      } else {
+        map.removeLayer(m);
+      }
+    });
+  }
+
+  attractions.forEach(attr => {
+    if (attr.lat && attr.lng) {
+      const marker = createMarker(attr);
+      allMarkers.push(marker);
+    }
+  });
+
+  let favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+
+  function saveFavourites() {
+    localStorage.setItem("favourites", JSON.stringify(favourites));
+    renderFavourites();
+  }
+
+  function renderFavourites() {
+    const list = document.getElementById("favourites-list");
+    list.innerHTML = favourites.length
+            ? ""
+            : "<li class='list-group-item'>No favourites yet.</li>";
+    favourites.forEach(name => {
+      const item = document.createElement("li");
+      item.className = "list-group-item d-flex justify-content-between align-items-center";
+      item.textContent = name;
+      const btn = document.createElement("button");
+      btn.textContent = "Remove";
+      btn.className = "btn btn-sm btn-danger";
+      btn.onclick = () => {
+        favourites = favourites.filter(f => f !== name);
+        saveFavourites();
+      };
+      item.appendChild(btn);
+      list.appendChild(item);
+    });
+  }
+
+  function addFavourite(name) {
+    if (!favourites.includes(name)) {
+      favourites.push(name);
+      saveFavourites();
+      alert(`${name} added to favourites.`);
+    } else {
+      alert(`${name} is already in favourites.`);
+    }
+  }
+
+  renderFavourites();
+</script>
+</body>
+</html>

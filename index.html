@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Explore London - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css?v=2" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+  <style>
+    .hero {
+      background: url('images/london-skyline.jpg') no-repeat center center/cover;
+      height: 100vh;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: bold;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .btn-cta {
+      padding: 10px 24px;
+      font-size: 1rem;
+    }
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .itinerary-box {
+      background-color: #f8f9fa;
+      padding: 40px;
+      border-radius: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">
+      <img src="images/explore-london-logo.png" alt="Explore London Logo" height="50">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav align-items-center gap-2">
+        <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="attractions.html">Attractions</a></li>
+        <li class="nav-item"><a class="nav-link" href="map.html">Map</a></li>
+        <li class="nav-item"><a class="nav-link" href="itinerary.html">Itinerary</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+      <ul class="navbar-nav align-items-center gap-2 ms-auto" id="auth-links"></ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Explore London</h1>
+    <p>Plan your perfect trip through London’s top attractions</p>
+    <div id="hero-auth-buttons" class="d-flex justify-content-center gap-3" style="display: none;">
+      <a href="login.html" class="btn-itinerary btn-cta">Sign In</a>
+      <a href="register.html" class="btn btn-outline-light btn-cta">Register</a>
+    </div>
+  </div>
+</section>
+
+<!-- Main Content -->
+<div class="container py-5">
+  <h2 class="section-title">Explore London's Top Attractions</h2>
+  <div class="row mb-4">
+    <div class="col-md-7">
+      <div class="d-flex flex-wrap gap-2">
+        <input id="search-category" class="form-control" list="categories" placeholder="Select or type a category" style="flex: 1;">
+        <datalist id="categories">
+          <option value="Landmarks">
+          <option value="History">
+          <option value="Entertainment">
+          <option value="Family">
+          <option value="Dining">
+        </datalist>
+        <select id="search-filter" class="form-select" style="max-width: 160px;">
+          <option disabled selected>Filter by</option>
+          <option value="Price">Price</option>
+          <option value="Distance">Distance</option>
+          <option value="Popularity">Popularity</option>
+        </select>
+        <button id="search-btn" class="btn-itinerary">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="mb-3">View Attractions on the Map</h3>
+  <div id="home-map" style="height: 400px; border-radius: 8px; border: 1px solid #ccc;"></div>
+</div>
+
+<!-- Itinerary Box -->
+<section class="py-5">
+  <div class="container">
+    <div class="itinerary-box">
+      <h3 class="mb-3">Build Your London Itinerary</h3>
+      <p class="mb-4">Easily create and manage your list of must-see attractions for your trip.</p>
+      <a href="itinerary.html" class="btn-itinerary">Plan Your Itinerary</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer mt-5 bg-light text-dark py-4">
+  <div class="container">
+    <div class="row text-center text-md-start">
+      <div class="col-md-4 mb-3">
+        <h5>Contact Us</h5>
+        <p>Email: explore@londonvisits.com</p>
+        <p>Phone: +44 20 7946 0991</p>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="privacy.html" class="text-dark text-decoration-none">Privacy Policy</a></li>
+          <li><a href="terms.html" class="text-dark text-decoration-none">Terms of Service</a></li>
+          <li><a href="sitemap.html" class="text-dark text-decoration-none">Sitemap</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Follow Us</h5>
+        <div class="d-flex gap-3 justify-content-center justify-content-md-start">
+          <a href="#" class="text-dark"><i class="bi bi-facebook fs-4"></i></a>
+          <a href="#" class="text-dark"><i class="bi bi-twitter fs-4"></i></a>
+          <a href="#" class="text-dark"><i class="bi bi-instagram fs-4"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-3">
+      <small>&copy; 2025 Explore London. All rights reserved.</small>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/data.js"></script>
+<script src="js/script.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const authLinks = document.getElementById("auth-links");
+    const heroButtons = document.getElementById("hero-auth-buttons");
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    if (authLinks) {
+      if (currentUser && currentUser.username) {
+        authLinks.innerHTML = `
+          <li class="nav-item text-nowrap"><span class="nav-link disabled">Welcome, ${currentUser.username}</span></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="logout()">Sign Out</a></li>
+        `;
+        if (heroButtons) heroButtons.style.display = "none";
+      } else {
+        authLinks.innerHTML = `
+          <li class="nav-item"><a class="nav-link" href="login.html">Sign In</a></li>
+          <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+        `;
+        if (heroButtons) heroButtons.style.display = "flex";
+      }
+    }
+
+    window.logout = function () {
+      localStorage.removeItem("currentUser");
+      location.reload();
+    };
+
+    document.getElementById("search-btn").addEventListener("click", () => {
+      const category = document.getElementById("search-category").value.trim();
+      const filter = document.getElementById("search-filter").value;
+      if (!category || filter === "Filter by") {
+        alert("Please select both a category and a filter.");
+        return;
+      }
+      window.location.href = `results.html?category=${encodeURIComponent(category)}&filter=${encodeURIComponent(filter)}`;
+    });
+
+    const map = L.map('home-map').setView([51.505, -0.09], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data © OpenStreetMap contributors'
+    }).addTo(map);
+
+    attractions.forEach(attraction => {
+      if (!attraction.lat || !attraction.lng) return;
+      const popup = `
+        <strong>${attraction.name}</strong><br>
+        ${attraction.description}<br>
+        <a href="${attraction.link}" target="_blank">Learn More</a>
+      `;
+      L.marker([attraction.lat, attraction.lng]).addTo(map).bindPopup(popup);
+    });
+  });
+</script>
+</body>
+</html>
