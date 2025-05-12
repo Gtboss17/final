@@ -7,12 +7,11 @@ function checkUserAuth() {
     }
 }
 
-// Only run this if the body tag has the class "requires-login"
 if (document.body.classList.contains("requires-login")) {
     checkUserAuth();
 }
 
-// === Navbar: show logged-in user or login link ===
+// === Navbar: show logged-in user or login/register links ===
 document.addEventListener("DOMContentLoaded", () => {
     const authLinks = document.getElementById("auth-links");
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -26,24 +25,39 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             authLinks.innerHTML = `
                 <li class="nav-item"><a class="nav-link" href="login.html">Sign In</a></li>
+                <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
             `;
         }
     }
+
+    // === Attraction Search Filter (if present) ===
+    const searchInput = document.getElementById("search-input");
+    const cards = document.querySelectorAll(".attraction-card");
+    if (searchInput) {
+        searchInput.addEventListener("input", () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            cards.forEach(card => {
+                const name = card.getAttribute("data-name").toLowerCase();
+                card.style.display = name.includes(searchTerm) ? "block" : "none";
+            });
+        });
+    }
 });
 
+// === Logout Function ===
 function logout() {
     localStorage.removeItem("currentUser");
     location.reload();
 }
 
-// === Itinerary management ===
+// === Itinerary Management ===
 let itinerary = JSON.parse(localStorage.getItem('itinerary')) || [];
 
 function addToItinerary(place) {
     if (!itinerary.includes(place)) {
         itinerary.push(place);
         localStorage.setItem('itinerary', JSON.stringify(itinerary));
-        loadItinerary();
+        loadItinerary?.(); // optional chaining
         alert(`${place} added to your itinerary.`);
     } else {
         alert(`${place} is already in your itinerary.`);
@@ -98,7 +112,7 @@ function confirmItinerary() {
     }
 }
 
-// === Suggested Attractions (Itinerary Page) ===
+// === Suggested Attractions ===
 function loadRecommendations() {
     const container = document.getElementById("recommendations");
     if (!container || typeof attractions === "undefined") return;
@@ -145,20 +159,3 @@ function loadRecommendations() {
         }
     });
 }
-
-// === Search filter logic ===
-document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.getElementById("search-input");
-    const cards = document.querySelectorAll(".attraction-card");
-
-    if (searchInput) {
-        searchInput.addEventListener("input", () => {
-            const searchTerm = searchInput.value.toLowerCase();
-
-            cards.forEach(card => {
-                const name = card.getAttribute("data-name").toLowerCase();
-                card.style.display = name.includes(searchTerm) ? "block" : "none";
-            });
-        });
-    }
-});

@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+
+    <style>
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+    </style>
 </head>
 <body>
 
@@ -35,7 +46,7 @@
 
 <!-- Page Content -->
 <div class="container mt-5">
-    <h2>Top London Attractions</h2>
+    <h2 class="mb-3">Top London Attractions</h2>
     <p>Browse our full list of London attractions and add your favourites to your itinerary.</p>
 
     <div id="attractions-container" class="row mt-4">
@@ -44,7 +55,7 @@
 </div>
 
 <!-- Footer -->
-<footer class="footer mt-5 bg-dark text-white py-4">
+<footer class="footer mt-5 bg-light text-dark py-4">
     <div class="container">
         <div class="row text-center text-md-start">
             <div class="col-md-4 mb-3">
@@ -55,17 +66,17 @@
             <div class="col-md-4 mb-3">
                 <h5>Quick Links</h5>
                 <ul class="list-unstyled">
-                    <li><a href="privacy.html" class="text-white text-decoration-none">Privacy Policy</a></li>
-                    <li><a href="terms.html" class="text-white text-decoration-none">Terms of Service</a></li>
-                    <li><a href="sitemap.html" class="text-white text-decoration-none">Sitemap</a></li>
+                    <li><a href="privacy.html" class="text-dark text-decoration-none">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="text-dark text-decoration-none">Terms of Service</a></li>
+                    <li><a href="sitemap.html" class="text-dark text-decoration-none">Sitemap</a></li>
                 </ul>
             </div>
             <div class="col-md-4 mb-3">
                 <h5>Follow Us</h5>
                 <div class="d-flex gap-3 justify-content-center justify-content-md-start">
-                    <a href="#" class="text-white"><i class="bi bi-facebook fs-4"></i></a>
-                    <a href="#" class="text-white"><i class="bi bi-twitter fs-4"></i></a>
-                    <a href="#" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
+                    <a href="#" class="text-dark"><i class="bi bi-facebook fs-4"></i></a>
+                    <a href="#" class="text-dark"><i class="bi bi-twitter fs-4"></i></a>
+                    <a href="#" class="text-dark"><i class="bi bi-instagram fs-4"></i></a>
                 </div>
             </div>
         </div>
@@ -77,8 +88,11 @@
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script src="js/data.js"></script>
 <script>
+    AOS.init({ once: true });
+
     let itinerary = JSON.parse(localStorage.getItem('itinerary')) || [];
 
     function addToItinerary(place) {
@@ -121,18 +135,18 @@
             return;
         }
 
-        attractions.forEach(attr => {
+        attractions.forEach((attr, i) => {
             const col = document.createElement("div");
             col.className = "col-md-4 mb-4";
             col.innerHTML = `
-        <div class="card h-100">
+        <div class="card h-100 shadow-sm" data-aos="fade-up" data-aos-delay="${i * 100}">
           <img src="${attr.image}" class="card-img-top" alt="${attr.name}">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">${attr.name}</h5>
             <p class="card-text">${attr.description}</p>
             <p class="text-muted small">${attr.popularityDescription}</p>
             <a href="${attr.link}" target="_blank" class="btn btn-sm btn-outline-secondary mb-2">Learn More</a>
-            <button class="btn btn-itinerary mt-auto" onclick="addToItinerary('${attr.name}')">Add to Itinerary</button>
+            <button class="btn btn-danger mt-auto" onclick="addToItinerary('${attr.name}')">Add to Itinerary</button>
           </div>
         </div>
       `;
